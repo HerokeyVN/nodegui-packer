@@ -10,14 +10,14 @@ const { promisify } = require('util');
  * Console color helpers
  */
 const colors = {
-  reset: "\x1b[0m",
-  bright: "\x1b[1m",
-  green: "\x1b[32m",
-  yellow: "\x1b[33m",
-  blue: "\x1b[34m",
-  magenta: "\x1b[35m",
-  cyan: "\x1b[36m",
-  red: "\x1b[31m"
+    reset: "\x1b[0m",
+    bright: "\x1b[1m",
+    green: "\x1b[32m",
+    yellow: "\x1b[33m",
+    blue: "\x1b[34m",
+    magenta: "\x1b[35m",
+    cyan: "\x1b[36m",
+    red: "\x1b[31m"
 };
 
 /**
@@ -27,7 +27,7 @@ const colors = {
  * @returns {string} Colorized text
  */
 function colorize(text, color) {
-  return `${color}${text}${colors.reset}`;
+    return `${color}${text}${colors.reset}`;
 }
 
 const PE_SIGNATURE_OFFSET_LOCATION = 0x3c;
@@ -90,52 +90,51 @@ function switchIfCui(fd, subsystemOffset) {
  */
 async function runWinDeployQt(filePath, options = {}) {
     const args = [filePath];
-    
+
     if (options.qmlDir) {
         args.unshift('--qmldir', options.qmlDir);
     }
-    
+
     if (options.debug) {
         args.unshift('--debug');
     } else if (options.release) {
         args.unshift('--release');
     }
-    
+
     if (options.translationDir) {
         args.unshift('--translationdir', options.translationDir);
     }
-    
+
     if (Array.isArray(options.extraArgs)) {
         args.unshift(...options.extraArgs);
     }
-    
+
     let windeployqtPath = 'windeployqt';
     if (options.qtDir) {
         windeployqtPath = path.join(options.qtDir, 'bin', 'windeployqt');
     }
-    
+
     console.log(colorize(`Running: ${windeployqtPath} ${args.join(' ')}`, colors.blue));
-    
+
     return new Promise((resolve, reject) => {
-        const process = child_process.spawn(windeployqtPath, args, { 
+        const process = child_process.spawn(windeployqtPath, args, {
             shell: true,
             stdio: 'pipe'
         });
-        
+
         let output = '';
         let error = '';
-        
+
         process.stdout.on('data', (data) => {
             output += data.toString();
             console.log(data.toString()); // Keep stdout as is, often formatted by the tool
         });
-        
+
         process.stderr.on('data', (data) => {
             error += data.toString();
-            // Color stderr output red for visibility
             console.error(colorize(data.toString(), colors.red));
         });
-        
+
         process.on('close', (code) => {
             if (code !== 0) {
                 reject(new Error(`windeployqt failed with code ${code}: ${error}`));
@@ -157,10 +156,10 @@ async function switchToGuiSubsystem(filePath, windeployqtOptions) {
         console.log(colorize(`Found a valid ${imageFormat} executable file`, colors.green));
         const subsystemOffset = optionalHeaderOffset + 68; // From https://docs.microsoft.com/en-us/windows/win32/debug/pe-format#optional-header-windows-specific-fields-image-only
         switchIfCui(fd, subsystemOffset);
-        
+
         // Close the file descriptor before running windeployqt
         fs.closeSync(fd);
-        
+
         // Run windeployqt if options are provided
         if (windeployqtOptions) {
             try {
