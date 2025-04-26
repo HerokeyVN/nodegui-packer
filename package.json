@@ -1,15 +1,15 @@
 {
   "name": "@nodegui/packer",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "files": [
-    "dist",
+    "src",
     "template",
     "scripts"
   ],
   "description": "Package and deploy apps built with NodeGUI to all platforms",
   "main": "./src/index.js",
   "bin": {
-    "nodegui-packer": "./dist/cli.js"
+    "nodegui-packer": "./src/cli.js"
   },
   "scripts": {
     "build": "tsc",
