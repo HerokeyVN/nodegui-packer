@@ -17,7 +17,7 @@ Currently if you need to produce a build you need to run the packer in different
 - First step is to install the packer as a dev dependency. You can do so by:
   
   ```
-  npm install https://github.com/HerokeyVN/nodegui-packer
+  npm install  --save-dev https://github.com/HerokeyVN/nodegui-packer
   ```
 
 - Next you can run the init command:
