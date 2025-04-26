@@ -56,9 +56,15 @@ async function copyQode(dest) {
  * Copies application distribution files
  */
 async function copyAppDist(distPath, resourceDir) {
+	console.log(colorize(`Copying application files (excluding node_modules)...`, colors.blue));
 	await fs_extra_1.copy(distPath, path_1.resolve(resourceDir, "dist"), {
 		recursive: true,
+		filter: (src) => {
+			// Exclude any node_modules folders from the source
+			return !src.includes(path_1.join('node_modules'));
+		}
 	});
+	console.log(colorize(`Finished copying application files`, colors.green));
 }
 
 function getAllNodeAddons(dirPath) {
