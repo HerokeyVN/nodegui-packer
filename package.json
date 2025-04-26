@@ -7,7 +7,7 @@
     "scripts"
   ],
   "description": "Package and deploy apps built with NodeGUI to all platforms",
-  "main": "./dist/index.js",
+  "main": "./src/index.js",
   "bin": {
     "nodegui-packer": "./dist/cli.js"
   },
