@@ -19,14 +19,11 @@
   "author": "atulanand94@gmail.com",
   "license": "MIT",
   "devDependencies": {
-    "@nodegui/nodegui": "^0.39.1",
+    "@nodegui/nodegui": "",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^16.10.2",
     "@types/plist": "^3.0.2",
     "typescript": "^4.4.3"
-  },
-  "peerDependencies": {
-    "@nodegui/nodegui": ">=0.15.0"
   },
   "dependencies": {
     "@nodegui/artifact-installer": "^1.1.0",
